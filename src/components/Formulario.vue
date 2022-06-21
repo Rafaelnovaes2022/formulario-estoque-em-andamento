@@ -19,6 +19,45 @@
             <InputText placeholder="Nome do Produto" />
           </div>
         </div>
+        <div>
+           <div class="col-12 mb-2 lg:col-4 lg:mb-0"/>
+          <MultiSelect v-model="selectedCountries" :options="produtos" optionLabel="name" placeholder="Select Countries" :filter="true" class="multiselect-custom">
+            <template #value="slotProps">
+                <div class="country-item country-item-value" v-for="option of slotProps.value" :key="option.code">
+                    <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" class="mr-2" width="18" />
+                    <div>{{option.name}}</div>
+                </div>
+                <template v-if="!slotProps.value || slotProps.value.length === 0">
+                    Select Products
+                </template>
+            </template>
+            <template #option="slotProps">
+                <div class="country-item">
+                    <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" class="mr-2" width="18" />
+                    <div>{{slotProps.option.name}}</div>
+                </div>
+            </template>
+        </MultiSelect>
+        </div>
+        <div>
+          <div class="col-12 mb-2 lg:col-11 lg:mt-25" ></div>
+          Descrição
+          <div class="col-12 mb-2 lg:col-11 lg:mt-25" ></div>
+         
+          <Textarea v-model="value2" :autoResize="true" rows="5" cols="30" />
+        </div>
+        <div class="col-12 mb-2 lg:col-11 lg:mt-25" ></div>
+          
+            <div class="grid p-fluid">
+            <div class="field col-12 md:col-11">
+                <label for="stacked">Preço</label>
+                <InputNumber id="stacked" v-model="value17" showButtons mode="currency" currency="BRL" />
+            </div>
+            <div>
+              <div class="col-12 mb-2 lg:col-11 lg:mt-25" ></div>
+              <Rating v-model="val1" />
+            </div>
+        </div>
       </template>
       <template #footer>
         <Button icon="pi pi-check" label="Confirm" />
@@ -31,38 +70,71 @@
       </template>
     </Card>
   </div>
-  
-        <div class="card">
-            <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions">
-                <template #header>
-                    <h5>Basic</h5>
-                </template>
-                <template #item="slotProps">
-                    <div class="product-item">
-                        <div class="product-item-content">
-                            <div class="mb-3">
-                                <img src="https://images.tcdn.com.br/img/img_prod/673889/computador_completo_intel_i3_4gb_ram_monitor_18_5_1253_1_20190914113558.jpg" :alt="slotProps.data.name" class="product-image" />
-                            </div>
-                            <div>
-                                <h4 class="mb-1">{{slotProps.data.name}}</h4>
-                                <h6 class="mt-0 mb-3">${{slotProps.data.price}}</h6>
-                                <span :class="'product-badge status-'+slotProps.data.inventoryStatus.toLowerCase()">{{slotProps.data.inventoryStatus}}</span>
-                                <div class="car-buttons mt-5">
-                                    <Button icon="pi pi-search" class="p-button p-button-rounded mr-2" />
-                                    <Button icon="pi pi-star-fill" class="p-button-success p-button-rounded mr-2" />
-                                    <Button icon="pi pi-cog" class="p-button-help p-button-rounded" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Carousel>
-        </div>
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+          val1: null,
+          val2: 3,
+            selectedCities1: null,
+            selectedCities2: null,
+            selectedCountries: null,
+            selectedGroupedCities: null,
+            selectedItems: null,
+            selectAll: false,          
+            produtos: [
+                {name: 'HUB USB', code: 'RTX 3060 Ti'},
+                {name: 'HeadSetGamer', code: 'HyperX'},
+                {name: 'Monitor Gamer', code: 'ASUS'},
+                
+            ],
+            
+            items: Array.from({ length: 1000 }, (_, i) => ({ label: `Item #${i}`, value: i }))
+        }
+    },
+    methods: {
+        onSelectAllChange(event) {
+            this.selectedItems = event.checked ? this.items.map((item) => item.value) : [];
+            this.selectAll = event.checked;
+        },
+        onChange(event) {
+            this.selectAll = event.value.length === this.items.length
+        }
+        
+    }
+}
 </script>
 
-<style>
+<style lang="scss" scoped>
+.p-multiselect {
+    width: 18rem;
+}
+
+::v-deep(.multiselect-custom) {
+    .p-multiselect-label:not(.p-placeholder) {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+    }
+
+    .country-item-value {
+        padding: .25rem .5rem;
+        border-radius: 3px;
+        display: inline-flex;
+        margin-right: .5rem;
+        background-color: var(--primary-color);
+        color: var(--primary-color-text);
+
+        img.flag {
+            width: 17px;
+        }
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .p-multiselect {
+        width: 100%;
+    }
+}
 </style>

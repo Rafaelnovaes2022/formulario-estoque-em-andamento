@@ -2,6 +2,7 @@
   <div id="app">
     <Toast/>
     <Formulario />
+    
   </div>
 </template>
 
@@ -10,7 +11,7 @@ import Formulario from "./components/Formulario.vue";
 
 export default {
   name: 'App',
-  components: { Formulario },
+  components: { Formulario},
 }
 </script>
 
