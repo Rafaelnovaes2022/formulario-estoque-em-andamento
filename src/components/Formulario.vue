@@ -87,16 +87,12 @@
           <div class="field col-12 md:col-11">
             <label for="stacked">Preço</label>
             <InputNumber
-              id="valor"
-              v-model="v$.valor.$model"
+              id="stacked"
+              v-model="valor"
               showButtons
               mode="currency"
-              :class="{ 'p-invalid': v$.valor.$invalid && submitted }"
               currency="BRL"
             />
-             <small class="p-error" v-if="v$.valor.$invalid && submitted"
-                >Campo obrigatório
-            </small>  
           </div>
           <div>
             <div class="col-12 mb-2 lg:col-11 lg:mt-25"></div>
@@ -148,7 +144,7 @@ export default {
         return {
           produtos: { required },
           valor: { required },
-        }; // Matches this.firstValor
+        }; // Matches this.firstName
       },
     };
   },
