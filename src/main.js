@@ -22,11 +22,13 @@ import Calendar from 'primevue/calendar';
 import ToastService from 'primevue/toastservice';
 import DialogService from 'primevue/dialogservice';
 import Carousel from 'primevue/carousel';
-
-
-
-
-
+import MultiSelect from 'primevue/multiselect';
+import InputNumber from 'primevue/inputnumber';
+import Rating from 'primevue/rating';
+import FileUpload from 'primevue/fileupload';
+import Ripple from 'primevue/ripple';
+import ProgressBar from 'primevue/progressbar';
+import Message from 'primevue/message';
 
 import 'primevue/resources/themes/saga-blue/theme.css'       //theme
 import 'primevue/resources/primevue.min.css'                 //core css
@@ -62,5 +64,12 @@ app.component('TreeSelect', TreeSelect);
 app.component('Calendar', Calendar);
 app.component('DialogService', DialogService);
 app.component('Carousel', Carousel);
+app.component('MultiSelect',MultiSelect);
+app.component('InputNumber',InputNumber);
+app.component('Rating',Rating);
+app.component('FileUploud',FileUpload);
+app.component('Ripple',Ripple);
+app.component('ProgressBar',ProgressBar);
+app.component('Message',Message);
 
 app.mount('#app')
