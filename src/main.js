@@ -29,6 +29,7 @@ import FileUpload from 'primevue/fileupload';
 import Ripple from 'primevue/ripple';
 import ProgressBar from 'primevue/progressbar';
 import Message from 'primevue/message';
+import Textarea from 'primevue/textarea';
 
 import 'primevue/resources/themes/saga-blue/theme.css'       //theme
 import 'primevue/resources/primevue.min.css'                 //core css
@@ -71,5 +72,6 @@ app.component('FileUploud',FileUpload);
 app.component('Ripple',Ripple);
 app.component('ProgressBar',ProgressBar);
 app.component('Message',Message);
+app.component('Textarea', Textarea);
 
 app.mount('#app')
