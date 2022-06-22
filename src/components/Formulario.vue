@@ -1,173 +1,200 @@
 <template>
-  <div>
-    <Card style="width: 25rem">
+  <div class="flex justify-content-center">
+    <Card style="width: 60rem">
       <template #header>
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiIRQpEDQrbM5MVru8_KJ_XWDfpDbGyCaW2g&usqp=CAU"
-          style="height: 15rem"
+          style="width: 21rem"
         />
       </template>
       <template #title> Formulario </template>
       <template #subtitle> Estoque </template>
       <template #content>
-        <div>
-          <div class="p-field">
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">
-                <i class="pi pi-shopping-bag"></i>
-              </span>
-              <InputText placeholder="Nome do Produto" />
-            </div>
-          </div>
-          <br />
-          <div class="p-field">
-            <MultiSelect
-              v-model="selectedProdutos"
-              :options="produtos"
-              optionLabel="name"
-              placeholder="Selecione Produtos"
-              :filter="true"
-              class="multiselect-custom"
-            >
-              <template #value="slotProps">
-                <div
-                  class="country-item country-item-value"
-                  v-for="option of slotProps.value"
-                  :key="option.code"
-                >
-                  <img
-                    src="https://s.tmimgcdn.com/scr/1200x627/126100/modelo-de-logotipo-de-comercio-eletronico_126139-original.png"
-                    class="mr-5"
-                    width="18"
-                  />
-                  <div>{{ option.name }}</div>
-                </div>
-                <template
-                  v-if="!slotProps.value || slotProps.value.length === 0"
-                >
-                  Select Products
-                </template>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <img
-                    src="https://s.tmimgcdn.com/scr/1200x627/126100/modelo-de-logotipo-de-comercio-eletronico_126139-original.png"
-                    class="mr-2"
-                    width="18"
-                  />
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </MultiSelect>
-            <div class="p-fiuid">
-              <br />
-
-              <div class="fluid col-12 mr:col-10">
-                <label for="minmax">Quantidade</label><br />
-
-                <InputNumber
-                  id="Quantidade"
-                  v-model="value4"
-                  mode="decimal"
-                  :min="0"
-                  :max="100"
+        <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+          <div class="p-fluid grid">
+            <div class="field col-12 md:col-6">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-shopping-bag"></i>
+                </span>
+                <InputText
+                  v-model="v$.nome.$model"
+                  :class="{ 'p-invalid': v$.nome.$invalid && submitted }"
+                  placeholder="Nome do Produto"
                 />
+                
               </div>
+              <small class="p-error" v-if="v$.nome.$invalid && submitted">Campo obrigatório</small>
+            </div>
+            <div class="field col-12 md:col-6">
+              <MultiSelect
+                v-model="selectedProdutos"
+                :options="produtos"
+                optionLabel="name"
+                placeholder="Selecione Produtos"
+                :filter="true"
+                class="multiselect-custom"
+              >
+                <template #value="slotProps">
+                  <div
+                    class="produto-item produto-item-value"
+                    v-for="option of slotProps.value"
+                    :key="option.code"
+                  >
+                    <img
+                      src="https://s.tmimgcdn.com/scr/1200x627/126100/modelo-de-logotipo-de-comercio-eletronico_126139-original.png"
+                      class="mr-5"
+                      width="18"
+                    />
+                    <div>{{ option.name }}</div>
+                  </div>
+                  <template
+                    v-if="!slotProps.value || slotProps.value.length === 0"
+                  >
+                    Select Products
+                  </template>
+                </template>
+                <template #option="slotProps">
+                  <div class="country-item">
+                    <img
+                      src="https://s.tmimgcdn.com/scr/1200x627/126100/modelo-de-logotipo-de-comercio-eletronico_126139-original.png"
+                      class="mr-2"
+                      width="18"
+                    />
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </MultiSelect>
             </div>
           </div>
 
-          <br />
-          <div class="p-field">
-            <label for="">Descrição</label><br />
-            <Textarea v-model="value2" :autoResize="true" rows="5" cols="30" />
-          </div>
-        </div>
-
-        <div class="p-fluid">
-          <div class="field col-12 md:col-11">
-            <label for="stacked">Preço</label>
-            <InputNumber
-              id="stacked"
-              v-model="valor"
-              showButtons
-              mode="currency"
-              currency="BRL"
+          <div class="p-fluid">
+            <label for="">Descrição</label>
+            <Textarea
+              v-model="descrição"
+              :autoResize="true"
+              rows="5"
+              cols="30"
             />
           </div>
-          <div>
-            <div class="col-12 mb-2 lg:col-11 lg:mt-25"></div>
-            <Rating v-model="val1" />
+
+          <!--<div class="field col-12 md:col-4">
+          <div class="fluid col-12 mr:col-10">
+            <label for="minmax">Quantidade</label>
+            <InputNumber
+              id="Quantidade"
+              v-model="quantidade"
+              mode="decimal"
+              :min="0"
+              :max="100"
+            />
           </div>
-        </div>
-      </template>
-      <template #footer>
-        <Button icon="pi pi-check" label="Confirm" />
-        <Button
-          icon="pi pi-times"
-          label="Cancel"
-          class="p-button-secondary"
-          style="margin-left: 0.5em"
-        />
+        </div>-->
+
+          <div class="p-fluid m-3">
+            <span class="p-fluid-label">
+              <label for="quantidade">Quantidade</label>
+              <Dropdown
+                id="tquantidade"
+                v-model="quantidade"
+                :options="produtos1"
+                optionLabel="name"
+              />
+            </span>
+          </div>
+
+          <div class="p-fluid">
+            <div class="field col-12 md:col-11 m-3">
+              <label for="stacked">Preço</label>
+              <InputNumber
+                id="vpreço"
+                v-model="preço"
+                showButtons
+                mode="currency"
+                currency="BRL"
+              />
+            </div>
+
+            <div>
+              <div class="col-12 mb-2 lg:col-11 lg:mt-25"></div>
+              <Rating v-model="preço" />
+            </div>
+          </div>
+          <Button type="submit" icon="pi pi-check" label="Confirm" />
+          <Button
+            icon="pi pi-times"
+            label="Cancel"
+            class="p-button-secondary"
+            style="margin-left: 0.5em"
+          />
+        </form>
       </template>
     </Card>
   </div>
 </template>
+
+
 
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
 export default {
-  setup() {
-    return { v$: useVuelidate() };
-  },
+  setup: () => ({ v$: useVuelidate() }),
+
   data() {
     return {
-      Quantidade: null,
+      nome: null,
+      preço: null,
       selectedProdutos: null,
-      val1: null,
-      val2: 3,
-      value2: null,
-      value4: true,
-      valor: null,
+      descrição: null,
+      produtos1: null,
+      quantidade: null,
+      submitted: false,
       produtos: [
         { name: "HUB USB", code: "RTX 3060 Ti" },
-        { name: "HeadSetGamer", code: "HyperX" },
-        { name: "Monitor Gamer", code: "ASUS" },
+        { name: "HeadSet", code: "HyperX" },
+        { name: "Monitor", code: "ASUS" },
       ],
 
       items: Array.from({ length: 1000 }, (_, i) => ({
         label: `Item #${i}`,
         value: i,
       })),
-      validations() {
-        return {
-          produtos: { required },
-          valor: { required },
-        }; // Matches this.firstName
-      },
     };
   },
+
+  validations() {
+    return {
+      nome: { required },
+    };
+  },
+
   methods: {
-    confirm: null,
-    onSelectAllChange(event) {
-      this.selectedItems = event.checked
-        ? this.items.map((item) => item.value)
-        : [];
-      this.selectAll = event.checked;
+    handleSubmit(isFormValid) {
+      this.submitted = true;
+
+      if (!isFormValid) {
+        return;
+      }
+
+      this.resetForm();
     },
-    onChange(event) {
-      this.selectAll = event.value.length === this.items.length;
+
+    resetForm() {
+      this.name = "";
+      this.email = "";
+      this.password = "";
+      this.date = null;
+      this.country = null;
+      this.accept = null;
+      this.submitted = false;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.p-multiselect {
-  width: 20rem;
-}
-
 ::v-deep(.multiselect-custom) {
   .p-multiselect-label:not(.p-placeholder) {
     padding-top: 0.25rem;
