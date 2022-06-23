@@ -22,7 +22,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  
+  background-image: url("https://www.smnadv.com.br/wp-content/uploads/2020/02/Nova-NR-18-traz-mudanc%CC%A7as-importantes-para-a-construc%CC%A7a%CC%83o-civil-sotto-maior-e-nagel-advogados.jpg");
+  animation: i;
   
 }
 </style>
