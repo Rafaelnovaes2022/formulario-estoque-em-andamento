@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <Toast/>
+    <Toast />
     <Formulario />
-    
   </div>
 </template>
 
@@ -10,10 +9,16 @@
 import Formulario from "./components/Formulario.vue";
 
 export default {
-  name: 'App',
-  components: { Formulario},
-}
+  name: "App",
+  components: { Formulario },
+  data() {
+    return { 
+      data: [],
+    };
+  },
+};
 </script>
+
 
 <style>
 #app {
@@ -24,6 +29,5 @@ export default {
   color: #2c3e50;
   background-image: url("https://www.smnadv.com.br/wp-content/uploads/2020/02/Nova-NR-18-traz-mudanc%CC%A7as-importantes-para-a-construc%CC%A7a%CC%83o-civil-sotto-maior-e-nagel-advogados.jpg");
   animation: i;
-  
 }
 </style>

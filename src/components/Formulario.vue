@@ -13,6 +13,26 @@
         <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
           <!--INICIO LINHA 1-->
           <div class="p-fluid grid">
+            <div class="field col-12 md:col-3">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-circle-fill"></i>
+                </span>
+                <InputNumber
+                  id="integeronly"
+                  v-model="v$.product.code.$model"
+                  placeholder="Código do Produto"
+                  :class="{
+                    'p-invalid': v$.product.code.$invalid && submitted,
+                  }"
+                />
+              </div>
+              <small
+                class="p-error"
+                v-if="v$.product.code.$invalid && submitted"
+                >Campo obrigatório</small
+              >
+            </div>
             <div class="field col-12 md:col-6">
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">
@@ -32,32 +52,24 @@
                 >Campo obrigatório</small
               >
             </div>
+
             <div class="field col-12 md:col-3">
-              <InputNumber
-                id="integeronly"
-                v-model="v$.product.code.$model"
-                placeholder="Código do Produto"
-                :class="{
-                  'p-invalid': v$.product.code.$invalid && submitted,
-                }"
-              />
-              <small
-                class="p-error"
-                v-if="v$.product.code.$invalid && submitted"
-                >Campo obrigatório</small
-              >
-            </div>
-            <div class="field col-12 md:col-3">
-              <Dropdown
-                v-model="product.category"
-                :class="{
-                  'p-invalid': v$.product.category.$invalid && submitted,
-                }"
-                :options="produtos"
-                optionLabel="name"
-                optionValue="code"
-                placeholder="Selecione Categoria"
-              />
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-chevron-down"></i>
+                </span>
+
+                <Dropdown
+                  v-model="v$.product.category.$model"
+                  :class="{
+                    'p-invalid': v$.product.category.$invalid && submitted,
+                  }"
+                  :options="produtos"
+                  optionLabel="name"
+                  optionValue="code"
+                  placeholder="Selecione Categoria"
+                />
+              </div>
               <small
                 class="p-error"
                 v-if="v$.product.category.$invalid && submitted"
@@ -149,19 +161,16 @@
           <div class="p-fluid">
             <div class="field col-12 md:col-3">
               <Button type="submit" icon="pi pi-check" label="Confirm" />
-              </div>
-              
-              <div class="field col-12 md:col-3 ">
-                 <Button
-              icon="pi pi-times"
-              label="Cancel"
-              class="p-button-secondary"
-              style="margin-left: 0em"
-            />
-              
-           
             </div>
-            
+
+            <div class="field col-12 md:col-3">
+              <Button
+                icon="pi pi-times"
+                label="Cancel"
+                class="p-button-secondary"
+                style="margin-left: 0em"
+              />
+            </div>
           </div>
 
           <!--FIM LINHA 5 (BUTTON)-->
@@ -176,6 +185,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import axios from "axios";
 
 export default {
   setup: () => ({ v$: useVuelidate() }),
@@ -195,10 +205,13 @@ export default {
         image: null,
       },
 
+      listproducts: [],
+      itemName: "",
+
       submitted: false,
-      optionQuantity:[
+      optionQuantity: [
         { name: "Em estoque" },
-        { name:  "Fora de estoque" },
+        { name: "Fora de estoque" },
         { name: "Em Alta" },
       ],
       produtos: [
@@ -223,11 +236,18 @@ export default {
       },
     };
   },
-
+  async created() {
+    try {
+      const res = await axios.get("http://localhost:3000/products");
+      this.listproducts = res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
   methods: {
     handleSubmit(isFormValid) {
       this.submitted = true;
-
+      console.log("teste");
       if (!isFormValid) {
         return;
       }
@@ -235,14 +255,41 @@ export default {
       this.resetForm();
     },
 
+    async boughtItem(id) {
+      await axios.patch(`http://localhost:3000/products/${id}`, {
+        bought: true,
+      });
+      this.products = this.items.map((item) => {
+        if (item.id === id) {
+          item.bought = true;
+        }
+        return item;
+      });
+    },
+    //on double clicking the item, it will call removeItem(id) method
+    removeItem(id) {
+      axios.delete(`http://localhost:3000/products/${id}`);
+      this.products = this.items.filter((item) => item.id !== id);
+    },
+    //method for adding items in the list
+    async addItem() {
+      const res = await axios.post(`http://localhost:3000/products`, {
+        name: this.itemName,
+      });
+      this.items = [...this.items, res.data];
+      this.itemName = "";
+    },
     resetForm() {
-      this.name = "";
-      this.email = "";
-      this.password = "";
-      this.date = null;
-      this.country = null;
-      this.accept = null;
-      this.submitted = false;
+      this.id;
+      this.code;
+      this.name;
+      this.price;
+      this.rating;
+      this.category;
+      this.description;
+      this.quantity;
+      this.inventoryStatus;
+      this.image;
     },
   },
 };
