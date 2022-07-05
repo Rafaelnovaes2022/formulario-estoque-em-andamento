@@ -18,8 +18,8 @@
                 <span class="p-inputgroup-addon">
                   <i class="pi pi-circle-fill"></i>
                 </span>
-                <InputNumber
-                  id="integeronly"
+                <InputText
+                  type="text"
                   v-model="v$.product.code.$model"
                   placeholder="Código do Produto"
                   :class="{
@@ -58,7 +58,6 @@
                 <span class="p-inputgroup-addon">
                   <i class="pi pi-chevron-down"></i>
                 </span>
-
                 <Dropdown
                   v-model="v$.product.category.$model"
                   :class="{
@@ -98,19 +97,15 @@
             >
           </div>
           <!--FIM LINHA 2-->
-
-          <!--INICIO LINHA 3-->
           <div class="p-fluid m-3">
             <span class="p-fluid-label">
               <label for="quantidade">Quantidade</label>
-              <Dropdown
+              <InputNumber
                 id="tquantidade"
                 v-model="v$.product.quantity.$model"
                 :class="{
                   'p-invalid': v$.product.quantity.$invalid && submitted,
                 }"
-                :options="optionQuantity"
-                optionLabel="name"
               />
               <small
                 class="p-error"
@@ -119,11 +114,31 @@
               >
             </span>
           </div>
+          <!--INICIO LINHA 3-->
+          <div class="p-fluid m-3">
+            <span class="p-fluid-label">
+              <label for="quantidade">Estoque</label>
+              <Dropdown
+                id="tquantidade"
+                v-model="v$.product.inventoryStatus.$model"
+                :class="{
+                  'p-invalid': v$.product.inventoryStatus.$invalid && submitted,
+                }"
+                :options="optionEstoque"
+                optionLabel="name"
+              />
+              <small
+                class="p-error"
+                v-if="v$.product.inventoryStatus.$invalid && submitted"
+                >Campo obrigatório</small
+              >
+            </span>
+          </div>
           <!--LINHA LINHA 3-->
 
           <!--INICIO LINHA 4-->
           <div class="p-fluid">
-            <div class="field col-12 md:col-11 m-3">
+            <div class="p-fluid">
               <label for="stacked">Preço</label>
               <InputNumber
                 id="vpreço"
@@ -139,9 +154,29 @@
                 >Campo obrigatório</small
               >
             </div>
-
+            <!--UPLOAD DE IMAGEM-->
+            <div class="p-fluid">
+              <div class="field mt-4">
+                <FileUpload
+                  name="demo[]"
+                  url="./upload.php"
+                  @upload="onUpload"
+                  :multiple="true"
+                  accept="image/*"
+                  :maxFileSize="1000000"
+                  chooseLabel="Anexar"
+                  :showUploadButton="false"
+                  cancelLabel= "Cancelar"
+                  
+                >
+                  <template #empty>
+                    <p>Arraste os itens para esse campo.</p>
+                  </template>
+                </FileUpload>
+              </div>
+            </div>
             <div>
-              <div class="col-12 mb-2 lg:col-11 lg:mt-25"></div>
+              <div class="p-fluid col-12 md:col-2"></div>
               <Rating
                 v-model="v$.product.rating.$model"
                 :class="{
@@ -155,6 +190,7 @@
               >
             </div>
           </div>
+
           <!--FIM LINHA 4-->
 
           <!--INICIO LINHA 5 (BUTTON)-->
@@ -176,6 +212,7 @@
           <!--FIM LINHA 5 (BUTTON)-->
         </form>
       </template>
+      <Toast />
     </Card>
   </div>
 </template>
@@ -184,8 +221,8 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import axios from "axios";
+import { required, minLength, maxLength } from "@vuelidate/validators";
+import ProductService from "../service/ProductService";
 
 export default {
   setup: () => ({ v$: useVuelidate() }),
@@ -209,7 +246,7 @@ export default {
       itemName: "",
 
       submitted: false,
-      optionQuantity: [
+      optionEstoque: [
         { name: "Em estoque" },
         { name: "Fora de estoque" },
         { name: "Em Alta" },
@@ -221,53 +258,62 @@ export default {
       ],
     };
   },
+  productService: null,
 
   validations() {
     return {
       product: {
-        code: { required },
-        name: { required },
+        code: { required, minLength: minLength(5), maxLength: maxLength(10) },
+        name: { required, minLength: minLength(3), maxLength: maxLength(255) },
         price: { required },
         rating: { required },
         category: { required },
-        description: { required },
+        description: {
+          required,
+          minLength: minLength(3),
+          maxLength: maxLength(255),
+        },
         quantity: { required },
         inventoryStatus: { required },
       },
     };
   },
-  async created() {
-    try {
-      const res = await axios.get("http://localhost:3000/products");
-      this.listproducts = res.data;
-    } catch (error) {
-      console.error(error);
-    }
+  created() {
+    this.productService = new ProductService();
   },
   methods: {
     handleSubmit(isFormValid) {
       this.submitted = true;
       console.log("teste");
+      //console.log(this.productService.getAllProducts());
       if (!isFormValid) {
-        return;
+        //console.log(this.product);
+        return this.$toast.add({
+          severity: "error",
+          summary: "Erro",
+          detail: "Campos obrigatórios!",
+          life: 3000,
+        });
+      } else {
+        this.productService.create(this.product).then((res) => {
+          if (res.status === 201) {
+            this.$toast.add({
+              severity: "success",
+              summary: "Sucesso",
+              detail: "Formulário ok!",
+              life: 3000,
+            });
+          }
+        });
+        this.resetForm();
       }
-
-      this.resetForm();
     },
 
-    async boughtItem(id) {
-      await axios.patch(`http://localhost:3000/products/${id}`, {
-        bought: true,
-      });
-      this.products = this.items.map((item) => {
-        if (item.id === id) {
-          item.bought = true;
-        }
-        return item;
-      });
+    upload(element){
+      this.product.image = element.files[0].objectURL;
     },
     //on double clicking the item, it will call removeItem(id) method
-    removeItem(id) {
+    /*   removeItem(id) {
       axios.delete(`http://localhost:3000/products/${id}`);
       this.products = this.items.filter((item) => item.id !== id);
     },
@@ -278,18 +324,21 @@ export default {
       });
       this.items = [...this.items, res.data];
       this.itemName = "";
-    },
+    }, */
     resetForm() {
-      this.id;
-      this.code;
-      this.name;
-      this.price;
-      this.rating;
-      this.category;
-      this.description;
-      this.quantity;
-      this.inventoryStatus;
-      this.image;
+      this.product = {
+        id: null,
+        code: null,
+        name: null,
+        price: null,
+        rating: null,
+        category: null,
+        description: null,
+        quantity: null,
+        inventoryStatus: null,
+        image: null,
+      };
+      this.submitted = false;
     },
   },
 };
