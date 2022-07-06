@@ -30,6 +30,11 @@ import ProgressBar from 'primevue/progressbar';
 import Message from 'primevue/message';
 import Textarea from 'primevue/textarea';
 import FileUpload from 'primevue/fileupload';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
+import Row from 'primevue/row';                     //optional for row
+import Toolbar from 'primevue/toolbar';
 
 import 'primevue/resources/themes/saga-blue/theme.css'       //theme
 import 'primevue/resources/primevue.min.css'                 //core css
@@ -73,5 +78,10 @@ app.component('Ripple',Ripple);
 app.component('ProgressBar',ProgressBar);
 app.component('Message',Message);
 app.component('Textarea', Textarea);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
+app.component('Toolbar', Toolbar);
 
 app.mount('#app')

@@ -373,6 +373,286 @@
         "name": "Em estoque"
       },
       "image": null
+    },
+    {
+      "id": "uox9J1N",
+      "code": "00001",
+      "name": "asdjoiajdoa",
+      "price": 20,
+      "rating": 5,
+      "category": "TJ",
+      "description": "aoisdjoajdoa",
+      "quantity": 15,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "9uBJ0qn",
+      "code": "00001",
+      "name": "tijolo",
+      "price": 6,
+      "rating": 5,
+      "category": "TJ",
+      "description": "oaosdkpoadkopas",
+      "quantity": 15,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "GP4Chvm",
+      "code": "00001",
+      "name": "akdakdapdoasdkioaijdaiodoioi",
+      "price": 1500,
+      "rating": 5,
+      "category": "TJ",
+      "description": "tudo ok!!!",
+      "quantity": 150,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "IDvQ93m",
+      "code": "00001",
+      "name": "ioasjdioajdiaso",
+      "price": 500,
+      "rating": 5,
+      "category": "TJ",
+      "description": "tudo ok!",
+      "quantity": 5,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "_4lkW8M",
+      "code": "00001",
+      "name": "asjdajdoasjoi",
+      "price": 4,
+      "rating": 5,
+      "category": "TJ",
+      "description": "aposdkakdopad",
+      "quantity": 15,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "9tatbkM",
+      "code": "00001",
+      "name": "poasdopasd",
+      "price": 5,
+      "rating": 5,
+      "category": "TJ",
+      "description": "paodkapdasd",
+      "quantity": 15,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "0xKI-d1",
+      "code": "333333",
+      "name": "asjdsajdi",
+      "price": 5,
+      "rating": 5,
+      "category": "CI",
+      "description": "aiosdjiasjdosiaj",
+      "quantity": 500,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "xEBT4z1",
+      "code": "55555",
+      "name": "yyyyyyy",
+      "price": 7,
+      "rating": 5,
+      "category": "LA",
+      "description": "auysdauysd",
+      "quantity": 500,
+      "inventoryStatus": {
+        "name": "Em Alta"
+      },
+      "image": null
+    },
+    {
+      "id": "yYVKzIT",
+      "code": "00005",
+      "name": "adasdddd",
+      "price": 6,
+      "rating": 5,
+      "category": "LA",
+      "description": "dopaskdaskdopsa",
+      "quantity": 50,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": "blob:http://localhost:8080/330be83d-0fe9-441f-a773-a1a5420edb15"
+    },
+    {
+      "id": "JEKnbBU",
+      "code": "666666",
+      "name": "io0jmjnjnkojni",
+      "price": 7,
+      "rating": 5,
+      "category": "TJ",
+      "description": "33333333333333333",
+      "quantity": 6666,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "5IPoCtT",
+      "code": "011111",
+      "name": "yagy",
+      "price": 4,
+      "rating": 5,
+      "category": "CI",
+      "description": "asuha",
+      "quantity": 666,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "vMZyN97",
+      "code": "000005",
+      "name": "okiinijnij",
+      "price": 600,
+      "rating": 5,
+      "category": "TJ",
+      "description": "aposdkopaskoaspod",
+      "quantity": 15,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "nXXT28p",
+      "code": "00006",
+      "name": "iuasdhahdiuasd",
+      "price": 6,
+      "rating": 5,
+      "category": "TJ",
+      "description": "uiasdhuiahdiuasd",
+      "quantity": 500,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": "blob:http://localhost:8080/fcde78ce-d46d-425c-9709-260c101bc55b"
+    },
+    {
+      "id": "cATot5H",
+      "code": "000001",
+      "name": "tijolo",
+      "price": 460,
+      "rating": 5,
+      "category": "TJ",
+      "description": "Opa deu certo essa parada!!!!",
+      "quantity": 120,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": "blob:http://localhost:8080/cbe7e19d-664f-45bf-babe-a6313af01491"
+    },
+    {
+      "id": "rMbxvbT",
+      "code": "000007",
+      "name": "yes",
+      "price": 5,
+      "rating": 5,
+      "category": "TJ",
+      "description": "ok tudo certo",
+      "quantity": 153,
+      "inventoryStatus": {
+        "name": "Em Alta"
+      },
+      "image": "blob:http://localhost:8080/4e4e27f2-778d-4d06-8b15-a155125ab3a3"
+    },
+    {
+      "id": "xX0rWCX",
+      "code": "00005",
+      "name": "isso ai",
+      "price": 6,
+      "rating": 5,
+      "category": "CI",
+      "description": "agora sim pegou!",
+      "quantity": 45,
+      "inventoryStatus": {
+        "name": "Fora de estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "eMj3Guj",
+      "code": "00004",
+      "name": "ápdaodkaosp",
+      "price": 500,
+      "rating": 5,
+      "category": "TJ",
+      "description": "kkkkkkkkk",
+      "quantity": 41,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "QxJbYai",
+      "code": "888888",
+      "name": "paosdjoaidjasd",
+      "price": 5000,
+      "rating": 2,
+      "category": "TJ",
+      "description": "adjoiajdaioda",
+      "quantity": 78,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "SQ6bZY7",
+      "code": "888888",
+      "name": "alkdoadado",
+      "price": 560,
+      "rating": 3,
+      "category": "TJ",
+      "description": "aopdkakdpa",
+      "quantity": 20,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": null
+    },
+    {
+      "id": "n9ozX7t",
+      "code": "999999",
+      "name": "1111111",
+      "price": 560,
+      "rating": 5,
+      "category": "TJ",
+      "description": "aushuahsuahaus",
+      "quantity": 580,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": "blob:http://localhost:8080/b91716b7-f68e-43cd-98ca-d97935f411e8"
     }
   ]
 }
