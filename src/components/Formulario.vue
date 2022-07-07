@@ -23,6 +23,23 @@
       <Column field="name" header="Name"></Column>
       <Column field="category" header="Category"></Column>
       <Column field="quantity" header="Quantity"></Column>
+
+      <!--Inicio Coluna Editar e deletar-->
+      <Column :exportable="false" style="min-width: 8rem">
+        <template #body="slotProps">
+          <Button
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            @click="editProduct(slotProps.data)"
+          />
+          <Button
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-warning"
+            @click="openDialogDelete(slotProps.data)"
+          />
+        </template>
+      </Column>
+      <!--Fim Coluna Editar e deletar-->
     </DataTable>
   </div>
   <!--Inicio dialog formulario-->
@@ -262,6 +279,37 @@
     </Dialog>
   </div>
   <!--Final dialog formulario-->
+
+  <!--Inicio dialogDelete-->
+  <Dialog
+    header="Mensagem de Confirmação!"
+    v-model:visible="deleteDialogProduct"
+    :style="{ width: '50%' }"
+
+    @hide="resetForm()"
+    :modal="true"
+  >
+    <div class="confirmation-content">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+      <span v-if="product"
+        >você tem certeza que deseja deletar o produto?</span
+      >
+    </div>
+    <template #footer>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        class="p-button-text"
+        @click="closeDialogDelete"
+      />
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        class="p-button-text"
+        @click="removerItem()"
+      />
+    </template>
+  </Dialog>
 </template>
 
 
@@ -294,6 +342,7 @@ export default {
       products: [],
       selectedProducts: null,
       displayConfirmation: false,
+      deleteDialogProduct: false,
       submitted: false,
 
       optionEstoque: [
@@ -336,16 +385,42 @@ export default {
     this.listarProdutos();
   },
   methods: {
+    removerItem() {
+      this.productService.remover(this.product.id).then((res) => {
+        if (res.status === 200) {
+          this.closeDialogDelete();
+          this.listarProdutos();
+          this.$toast.add({
+            severity: "success",
+            summary: "alerta",
+            detail: "Produto excluido com Sucesso",
+            life: 2000,
+          });
+        }
+      });
+    },
     listarProdutos() {
       this.productService.getAllProducts().then((res) => {
         this.products = res;
       });
     },
+
     openConfirmation() {
       this.displayConfirmation = true;
     },
+
     closeConfirmation() {
       this.displayConfirmation = false;
+    },
+
+    openDialogDelete(product) {
+      this.product = product;
+      this.deleteDialogProduct = true;
+    },
+
+    closeDialogDelete() {
+      this.deleteDialogProduct = false;
+      return;
     },
 
     handleSubmit(isFormValid) {
