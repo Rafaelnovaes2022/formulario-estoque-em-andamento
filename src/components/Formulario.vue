@@ -30,7 +30,7 @@
           <Button
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
-            @click="editProduct(slotProps.data)"
+            @click="openDialogAlterar(slotProps.data)"
           />
           <Button
             icon="pi pi-trash"
@@ -280,6 +280,233 @@
   </div>
   <!--Final dialog formulario-->
 
+  <!--Inicio dialog alterar-->
+   <Dialog
+      header=""
+      v-model:visible="displayAlterar"
+      :style="{ width: '50%' }"
+      @hide="resetForm()"
+      :modal="true"
+    >
+      <div class="flex">
+        <Card style="width: 60rem">
+          <template #header> </template>
+          <template #title> Formulario </template>
+          <template #subtitle> Estoque </template>
+          <template #content>
+            <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+              <!--INICIO LINHA 1-->
+              <div class="p-fluid grid">
+                <div class="field col-12 md:col-3">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                      <i class="pi pi-circle-fill"></i>
+                    </span>
+                    <InputText
+                      type="text"
+                      v-model="v$.product.code.$model"
+                      placeholder="Código do Produto"
+                      :class="{
+                        'p-invalid': v$.product.code.$invalid && submitted,
+                      }"
+                    />
+                  </div>
+                  <small
+                    class="p-error"
+                    v-if="v$.product.code.$invalid && submitted"
+                    >Campo obrigatório</small
+                  >
+                </div>
+                <div class="field col-12 md:col-6">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                      <i class="pi pi-shopping-bag"></i>
+                    </span>
+                    <InputText
+                      v-model="v$.product.name.$model"
+                      :class="{
+                        'p-invalid': v$.product.name.$invalid && submitted,
+                      }"
+                      placeholder="Nome do Produto"
+                    />
+                  </div>
+                  <small
+                    class="p-error"
+                    v-if="v$.product.name.$invalid && submitted"
+                    >Campo obrigatório</small
+                  >
+                </div>
+
+                <div class="field col-12 md:col-3">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                      <i class="pi pi-chevron-down"></i>
+                    </span>
+                    <Dropdown
+                      v-model="v$.product.category.$model"
+                      :class="{
+                        'p-invalid': v$.product.category.$invalid && submitted,
+                      }"
+                      :options="produtos"
+                      optionLabel="name"
+                      optionValue="code"
+                      placeholder="Selecione Categoria"
+                    />
+                  </div>
+                  <small
+                    class="p-error"
+                    v-if="v$.product.category.$invalid && submitted"
+                    >Campo obrigatório</small
+                  >
+                </div>
+              </div>
+              <!--FIM LINHA 1-->
+
+              <!--FIM LINHA 2-->
+              <div class="p-fluid grid">
+                <div class="field col-12 md:col-3 mt-3">
+                  <span class="p-fluid-label">
+                    <InputNumber
+                      placeholder="Quantidade"
+                      id="tquantidade"
+                      v-model="v$.product.quantity.$model"
+                      :class="{
+                        'p-invalid': v$.product.quantity.$invalid && submitted,
+                      }"
+                    />
+                    <small
+                      class="p-error"
+                      v-if="v$.product.quantity.$invalid && submitted"
+                      >Campo obrigatório</small
+                    >
+                  </span>
+                </div>
+
+                <!--INICIO LINHA 3-->
+                <div class="field col-12 md:col-6 mt-3">
+                  <span class="p-fluid-label">
+                    <Dropdown
+                      placeholder="Quantidade"
+                      id="tquantidade"
+                      v-model="v$.product.inventoryStatus.$model"
+                      :class="{
+                        'p-invalid':
+                          v$.product.inventoryStatus.$invalid && submitted,
+                      }"
+                      :options="optionEstoque"
+                      optionLabel="name"
+                    />
+                    <small
+                      class="p-error"
+                      v-if="v$.product.inventoryStatus.$invalid && submitted"
+                      >Campo obrigatório</small
+                    >
+                  </span>
+                </div>
+                <!--LINHA LINHA 3-->
+
+                <!--INICIO LINHA 4-->
+                <div class="field col-12 md:col-3 mt-3">
+                  <div class="p-fluid">
+                    <InputNumber
+                      placeholder="Preço"
+                      id="vpreço"
+                      v-model="v$.product.price.$model"
+                      :class="{
+                        'p-invalid': v$.product.price.$invalid && submitted,
+                      }"
+                      showButtons
+                      mode="currency"
+                      currency="BRL"
+                    />
+                    <small
+                      class="p-error"
+                      v-if="v$.product.price.$invalid && submitted"
+                      >Campo obrigatório</small
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!--INICIO LINHA 2-->
+              <div class="p-fluid grid">
+                <div class="field col-12">
+                  <label for="">Descrição</label>
+                  <Textarea
+                    v-model="v$.product.description.$model"
+                    :class="{
+                      'p-invalid': v$.product.description.$invalid && submitted,
+                    }"
+                    :autoResize="true"
+                    rows="5"
+                    cols="30"
+                  />
+                  <small
+                    class="p-error"
+                    v-if="v$.product.description.$invalid && submitted"
+                    >Campo obrigatório</small
+                  >
+                </div>
+              </div>
+
+              <!--UPLOAD DE IMAGEM-->
+              <div class="p-fluid grid">
+                <div class="field col-12">
+                  <FileUpload
+                    name="demo[]"
+                    url="./upload.php"
+                    :multiple="true"
+                    accept="image/*"
+                    :maxFileSize="1000000"
+                    :customUpload="true"
+                    :auto="true"
+                    @uploader="upload"
+                    chooseLabel="Anexar"
+                    :showUploadButton="false"
+                    cancelLabel="Cancelar"
+                  >
+                    <template #empty>
+                      <p>Arraste os itens para esse campo.</p>
+                    </template>
+                  </FileUpload>
+                </div>
+              </div>
+
+              <div class="p-fluid grid text-center">
+                <div class="field col-12">
+                  <Rating
+                    v-model="v$.product.rating.$model"
+                    :class="{
+                      'p-invalid': v$.product.rating.$invalid && submitted,
+                    }"
+                  />
+                  <small
+                    class="p-error"
+                    v-if="v$.product.rating.$invalid && submitted"
+                    >Campo obrigatório</small
+                  >
+                </div>
+              </div>
+
+              <!--FIM LINHA 4-->
+
+              <!--INICIO LINHA 5 (BUTTON)-->
+              
+
+              <!--FIM LINHA 5 (BUTTON)-->
+            </form>
+          </template>
+          <Toast />
+        </Card>
+      </div>
+      <template #footer>
+        <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="closeDialogAlterar"/>
+                <Button label="Save" icon="pi pi-check" class="p-button-text" @click="alterarProdutos" />
+
+      </template>
+
+    </Dialog>
+
   <!--Inicio dialogDelete-->
   <Dialog
     header="Mensagem de Confirmação!"
@@ -340,6 +567,9 @@ export default {
       listproducts: [],
       itemName: "",
       products: [],
+      dados: [],
+
+      displayAlterar: false,
       selectedProducts: null,
       displayConfirmation: false,
       deleteDialogProduct: false,
@@ -399,6 +629,35 @@ export default {
         }
       });
     },
+    alterarProdutos() {
+      this.submitted = true;
+      this.dados = {
+        id: this.product.id,
+        code: this.product.code,
+        name: this.product.name,
+        price: this.product.price,
+        rating: this.product.rating,
+        category: this.product.category,
+        description: this.product.description,
+        quantity: this.product.quantity,
+        inventoryStatus: this.product.inventoryStatus,
+        image: this.product.image,
+      }
+      this.productService.alterar(this.product.id, this.dados).then((res) => {
+        if (res.status === 200) {
+          this.displayAlterar = false;
+          this.$toast.add({
+            severity: "info",
+            detail: "Produto alterado com Sucesso",
+            life: 2000,
+          });
+          this.listarProdutos();          
+          this.resetForm();
+          
+        }
+      }) ;
+    },
+
     listarProdutos() {
       this.productService.getAllProducts().then((res) => {
         this.products = res;
@@ -420,6 +679,17 @@ export default {
 
     closeDialogDelete() {
       this.deleteDialogProduct = false;
+      return;
+    },
+
+    closeDialogAlterar(){
+      this.displayAlterar = false;
+      return;
+    },
+
+    openDialogAlterar(product){
+      this.product = product;
+      this.displayAlterar = true;
       return;
     },
 

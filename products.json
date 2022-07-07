@@ -1,28 +1,16 @@
 {
   "products": [
     {
-      "id": "1005",
-      "code": "av2231fwg",
-      "name": "Brown Purse",
-      "description": "Product Description",
-      "image": "brown-purse.jpg",
-      "price": 120,
-      "category": "Accessories",
-      "quantity": 0,
-      "inventoryStatus": "OUTOFSTOCK",
-      "rating": 4
-    },
-    {
       "id": "1006",
-      "code": "bib36pfvm",
-      "name": "Chakra Bracelet",
-      "description": "Product Description",
-      "image": "chakra-bracelet.jpg",
+      "code": "00005",
+      "name": "cimento",
       "price": 32,
-      "category": "Accessories",
+      "rating": 3,
+      "category": "CI",
+      "description": "Product Description",
       "quantity": 5,
       "inventoryStatus": "LOWSTOCK",
-      "rating": 3
+      "image": "chakra-bracelet.jpg"
     },
     {
       "id": "1007",
