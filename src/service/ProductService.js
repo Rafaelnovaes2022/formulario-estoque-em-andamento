@@ -28,10 +28,22 @@ export default class ProductService {
   async remover(data) {
     try {
       const res = axios.delete(`http://localhost:3000/products/${data}`)
-        return res;
+      return res;
 
     } catch (error) {
       console.log(error);
     }
   }
+
+  async alterar(id, data) {
+    try {
+      const res = await axios.put(`http://localhost:3000/products/${id}`, data)
+      return res;
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 }
+
