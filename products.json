@@ -1,28 +1,18 @@
 {
   "products": [
     {
-      "id": "1006",
-      "code": "00005",
-      "name": "cimento",
-      "price": 32,
-      "rating": 3,
-      "category": "CI",
-      "description": "Product Description",
-      "quantity": 5,
-      "inventoryStatus": "LOWSTOCK",
-      "image": "chakra-bracelet.jpg"
-    },
-    {
       "id": "1007",
-      "code": "mbvjkgip5",
-      "name": "Galaxy Earrings",
-      "description": "Product Description",
-      "image": "galaxy-earrings.jpg",
+      "code": "001",
+      "name": "Porcelanato",
       "price": 34,
-      "category": "Accessories",
-      "quantity": 23,
-      "inventoryStatus": "INSTOCK",
-      "rating": 5
+      "rating": 5,
+      "category": "LA",
+      "description": "Product Description",
+      "quantity": 50,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": "blob:http://localhost:8080/4ef1ddb7-af70-4710-ab79-b94477031bbf"
     },
     {
       "id": "1008",
@@ -595,6 +585,20 @@
         "name": "Em estoque"
       },
       "image": "blob:http://localhost:8080/dfeec330-33f7-4c60-8d22-b67ab7856bf5"
+    },
+    {
+      "id": "uNcsP-C",
+      "code": "00001",
+      "name": "Cimento",
+      "price": 250,
+      "rating": 5,
+      "category": "CI",
+      "description": "contém!",
+      "quantity": 500,
+      "inventoryStatus": {
+        "name": "Em estoque"
+      },
+      "image": "blob:http://localhost:8080/02dbb298-d54b-4df0-adba-06557bdd37b2"
     }
   ]
 }
